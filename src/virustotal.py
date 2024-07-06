@@ -12,17 +12,18 @@ def get_top_files(api_key, query, limit):
     )
     return response.json().get("data", [])
 
-def download_file(api_key, file_id, file_name, output_dir):
+def download_file(api_key, file_id, sha256, output_dir):
     vt = Virustotal(API_KEY=api_key)
     response = vt.request(f"files/{file_id}/download_url", method="GET")
     download_url = response.json().get('data')
     if download_url:
         file_response = requests.get(download_url, headers={"x-apikey": api_key})
         if file_response.status_code == 200:
-            file_path = os.path.join(output_dir, file_name)
+            file_path = os.path.join(output_dir, f"{sha256}.p12" if ".p12" in download_url else f"{sha256}.pfx")
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
             with open(file_path, "wb") as f:
                 f.write(file_response.content)
-            print(f"Downloaded and saved {file_name}")
+            print(f"Downloaded and saved {file_path}")
             return file_path
         else:
             print(f"Failed to download file {file_id}")
@@ -37,7 +38,7 @@ def unzip_file_if_needed(file_path, extract_to, password="infected"):
         os.remove(file_path)
         print(f"Extracted and removed {file_path}")
     else:
-        print(f"The file {file_path} is not a valid zip file or does not need extraction.")
+        print(f"")
 
 def vt_download(api_key, quantity, output_dir):
     query = "content:{02 01 03 30}@4 NOT tag:msi AND NOT tag:peexe AND ls:30d+"
@@ -50,6 +51,6 @@ def vt_download(api_key, quantity, output_dir):
             print(f"Name: {name}\nSha256: {sha256}\n")
             if '.p12' in name or '.pfx' in name:
                 print(f"Downloading {name} with SHA256: {sha256}")
-                file_path = download_file(api_key, obj['id'], name, output_dir)
+                file_path = download_file(api_key, obj['id'], sha256, output_dir)
                 if file_path:
                     unzip_file_if_needed(file_path, output_dir)

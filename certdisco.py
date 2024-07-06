@@ -6,7 +6,6 @@ from src.process import *
 from src.virustotal import *
 from src.parse import *
 
-
 def main():
     parser = argparse.ArgumentParser(description='Process and view certificates.')
     subparsers = parser.add_subparsers(dest='command')
