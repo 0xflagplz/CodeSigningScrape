@@ -43,13 +43,6 @@ def download_file(api_key, file_id, sha256, output_dir):
         logging.error(f"No download URL found for file {file_id}")
     return None
 
-def unzip_file_if_needed(file_path, extract_to, password="infected"):
-    if zipfile.is_zipfile(file_path):
-        with zipfile.ZipFile(file_path, 'r') as zip_ref:
-            zip_ref.extractall(path=extract_to, pwd=password.encode())
-        os.remove(file_path)
-        logging.info(f"Extracted and removed {file_path}")
-
 
 def vt_download(api_key, quantity, output_dir):
     query = "content:{02 01 03 30}@4 NOT tag:msi AND NOT tag:peexe AND ls:75d+"
