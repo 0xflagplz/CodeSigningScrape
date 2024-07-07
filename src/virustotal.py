@@ -53,5 +53,6 @@ def vt_download(api_key, quantity, output_dir):
         names = obj['attributes'].get('names', ['N/A'])
         for name in names:
             logging.info(f"Name: {name}\nSha256: {sha256}\n")
-            logging.info(f"Downloading {name} with SHA256: {sha256}")
-            file_path = download_file(api_key, obj['id'], sha256, output_dir)
+            if '.p12' in name or '.pfx' in name:
+                logging.info(f"Downloading {name} with SHA256: {sha256}")
+                file_path = download_file(api_key, obj['id'], sha256, output_dir)
