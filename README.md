@@ -2,7 +2,7 @@
 ```pip3 install -r requirements.txt```
 - john the ripper is required (pfx2john/john)
 - [Limelighter](https://github.com/Tylous/Limelighter) is required for testsigs command (Within PATH)
-- Hardcoded wordlist path /usr/share/wordlists/rockyou.txt
+- Hardcoded wordlist path /usr/share/wordlists/rockyou.txt (modify this [line](https://github.com/0xflagplz/CodeSigningScrape/blob/d96e31de5d2c10bc033173a397490b12ad61c842/src/process.py#L32) to change)
 - Hardcoded john format is --format=pfx (not pfx-opencl)
 
 ```
