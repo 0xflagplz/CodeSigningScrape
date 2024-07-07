@@ -62,3 +62,4 @@ Notes
 - Based of this [article](https://tij.me/blog/finding-and-utilising-leaked-code-signing-certificates/) by Tijme Gommers 
 - [Query](https://github.com/0xflagplz/CodeSigningScrape/blob/1d2125765b76de82683d67a6a4bad46b35b42c89/src/virustotal.py#L55): content:{02 01 03 30}@4 NOT tag:msi AND NOT tag:peexe AND ls:75d+
 - Modify [this](https://github.com/0xflagplz/CodeSigningScrape/blob/1d2125765b76de82683d67a6a4bad46b35b42c89/src/virustotal.py#L63) line to include more/less restrictions on downloaded file extensions
+  - This was done to save API usage, all files are saved as SHA256 without their extensions  
