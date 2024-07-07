@@ -45,7 +45,7 @@ def download_file(api_key, file_id, sha256, output_dir):
 
 
 def vt_download(api_key, quantity, output_dir):
-    query = "content:{02 01 03 30}@4 NOT tag:msi AND NOT tag:peexe AND ls:75d+"
+    query = "content:{02 01 03 30}@4 NOT tag:msi AND NOT tag:peexe AND ls:75d+ AND NOT p:5+"
     results = get_top_files(api_key, query, quantity)
 
     for obj in results:
@@ -53,6 +53,5 @@ def vt_download(api_key, quantity, output_dir):
         names = obj['attributes'].get('names', ['N/A'])
         for name in names:
             logging.info(f"Name: {name}\nSha256: {sha256}\n")
-            if '.p12' in name or '.pfx' in name:
-                logging.info(f"Downloading {name} with SHA256: {sha256}")
-                file_path = download_file(api_key, obj['id'], sha256, output_dir)
+            logging.info(f"Downloading {name} with SHA256: {sha256}")
+            file_path = download_file(api_key, obj['id'], sha256, output_dir)
