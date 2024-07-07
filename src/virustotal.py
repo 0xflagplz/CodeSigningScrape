@@ -63,5 +63,3 @@ def vt_download(api_key, quantity, output_dir):
             if '.p12' in name or '.pfx' in name:
                 logging.info(f"Downloading {name} with SHA256: {sha256}")
                 file_path = download_file(api_key, obj['id'], sha256, output_dir)
-                if file_path:
-                    unzip_file_if_needed(file_path, output_dir)
