@@ -82,6 +82,7 @@ def intake(directory):
                 if not directory.endswith('/') and not directory.endswith('\\'):
                     directory += '/'
                 path = directory + hash_value
-                parsing101(path, password)
+                parsing101(path, password, hash_value)
+
 
 

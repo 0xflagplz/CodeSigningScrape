@@ -6,7 +6,23 @@ from src.process import *
 from src.virustotal import *
 from src.parse import *
 
+def print_banner():
+    banner = """
+    __    ___  ____   ______  ___    ____  _____    __   ___  
+   /  ]  /  _]|    \ |      ||   \  |    |/ ___/   /  ] /   \ 
+  /  /  /  [_ |  D  )|      ||    \  |  |(   \_   /  / |     |
+ /  /  |    _]|    / |_|  |_||  D  | |  | \__  | /  /  |  O  |
+/   \_ |   [_ |    \   |  |  |     | |  | /  \ |/   \_ |     |
+\     ||     ||  .  \  |  |  |     | |  | \    |\     ||     |
+ \____||_____||__|\_|  |__|  |_____||____| \___| \____| \___/ 
+                                                              
+                 @ed
+          Code Signing Certificate Discovery Tool
+    """
+    print(banner)
+
 def main():
+    print_banner()  # Print the banner at the start
     parser = argparse.ArgumentParser(description='Process and view certificates.')
     subparsers = parser.add_subparsers(dest='command')
 
@@ -44,7 +60,6 @@ def main():
         vt_download(args.api, args.quantity, args.outputdir)
     else:
         parser.print_help()
-
 
 if __name__ == "__main__":
     main()

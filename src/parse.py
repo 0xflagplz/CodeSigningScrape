@@ -1,5 +1,4 @@
 import os
-import sys
 import subprocess
 import sqlite3
 from OpenSSL import crypto
@@ -19,14 +18,14 @@ def extract_certificate(pfx_file, password):
         ]
     subprocess.run(cmd, check=True)
 
-def parse_certificate(cert_file):
+def parse_certificate(cert_file, hash_value):
     # Load the certificate
     with open(cert_file, 'rb') as f:
         cert_data = f.read()
     cert = crypto.load_certificate(crypto.FILETYPE_PEM, cert_data)
 
     # Extract required information
-    cert_hash = cert.digest("sha256").decode('utf-8').replace(':', '')
+    cert_hash = hash_value
     issuer = cert.get_issuer().get_components()
     subject = cert.get_subject().get_components()
     cn = dict(subject).get(b'CN', b'').decode('utf-8')
@@ -72,21 +71,24 @@ def cleanup_files():
     if os.path.exists("certificate.pem"):
         os.remove("certificate.pem")
 
-def parsing101(pfx_file, password):
+def parsing101(pfx_file, password, hash_value):
 
     if not os.path.exists(pfx_file):
         print(f"File {pfx_file} does not exist.")
-        sys.exit(1)
+        return  # Exit early if the file does not exist
 
     if password == "NULL":
         password = ""
 
     try:
         extract_certificate(pfx_file, password)
-        cert_info = parse_certificate("certificate.pem")
+        cert_info = parse_certificate("certificate.pem", hash_value)
         store_certificate_info(cert_info, password)
     except subprocess.CalledProcessError as e:
         print(f"Failed to extract certificate: {e}")
-        sys.exit(1)
+    except crypto.Error as e:
+        print(f"Failed to parse certificate: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
     finally:
         cleanup_files()
