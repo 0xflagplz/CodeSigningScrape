@@ -1,6 +1,9 @@
 ## Usage
 ```pip3 install -r requirements.txt```
-- [Limelighter](https://github.com/Tylous/Limelighter) is required for testsigs command (Within PATH) 
+- john the ripper is required (pfx2john/john)
+- [Limelighter](https://github.com/Tylous/Limelighter) is required for testsigs command (Within PATH)
+- Hardcoded wordlist path /usr/share/wordlists/rockyou.txt
+- Hardcoded john format is --format=pfx (not pfx-opencl)
 
 ```
 > python3 .\certdisco.py -h
