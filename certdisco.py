@@ -5,6 +5,7 @@ from src.print import *
 from src.process import *
 from src.virustotal import *
 from src.parse import *
+from src.testsigs import *
 
 def print_banner():
     banner = """
@@ -38,6 +39,10 @@ def main():
     vt_parser.add_argument('-q', '--quantity', type=int, default=100, help='Number of files to fetch')
     vt_parser.add_argument('-o', '--outputdir', required=True, help='Output directory for downloaded files')
 
+    testsigs_parser = subparsers.add_parser('testsigs', help='Run limelighter with certificates')
+    testsigs_parser.add_argument('-c', '--certlocation', required=True, help='Directory containing certificates')
+    testsigs_parser.add_argument('-o', '--outputdir', required=True, help='Output directory for limelighter results')
+
     args = parser.parse_args()
 
     if args.command == 'import':
@@ -58,6 +63,8 @@ def main():
             print_certificate_database()
     elif args.command == 'vt':
         vt_download(args.api, args.quantity, args.outputdir)
+    elif args.command == 'testsigs':
+        testsigs(args.certlocation, args.outputdir)
     else:
         parser.print_help()
 
