@@ -1,4 +1,7 @@
 ## Usage
+```pip3 install -r requirements.txt```
+- [Limelighter](https://github.com/Tylous/Limelighter) is required for testsigs command (Within PATH) 
+
 ```
 > python3 .\certdisco.py -h
 
